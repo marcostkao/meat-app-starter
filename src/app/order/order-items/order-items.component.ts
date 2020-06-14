@@ -11,7 +11,7 @@ export class OrderItemsComponent implements OnInit {
 
   @Output() increaseQty = new EventEmitter<CartItem>()
   @Output() decreaseQty = new EventEmitter<CartItem>()
-  @Output() removeQty = new EventEmitter<CartItem>()
+  @Output() remove = new EventEmitter<CartItem>()
 
 
   constructor() { }
@@ -27,8 +27,8 @@ export class OrderItemsComponent implements OnInit {
     this.decreaseQty.emit(item)
   }
 
-  emitRemoveQty(item: CartItem) {
-    this.removeQty.emit(item)
+  emitRemove(item: CartItem) {
+    this.remove.emit(item)
   }
 
 }
