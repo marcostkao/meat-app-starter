@@ -370,5 +370,23 @@
       "restaurantId": "tasty-treats"
     }
   ],
-  "orders": []
+  "orders": [
+    {
+      "address": "Rua Nova Cidade",
+      "number": "520",
+      "optionalAddress": "bloco A",
+      "paymentOptions": "DEB",
+      "orderItems": [
+        {
+          "quantity": 1,
+          "menuId": "zlasagna"
+        },
+        {
+          "quantity": 1,
+          "menuId": "greensandwich"
+        }
+      ],
+      "id": 1
+    }
+  ]
 }
