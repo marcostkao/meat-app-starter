@@ -8,7 +8,7 @@ import { NgModel, FormControlName } from '@angular/forms'
 })
 export class InputComponent implements OnInit, AfterContentInit {
 
-  @Input() laber: string
+  @Input() label: string
   @Input() errorMessage: string
 
   input: any
