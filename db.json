@@ -483,6 +483,26 @@
         }
       ],
       "id": 7
+    },
+    {
+      "name": "Rua Humberto I",
+      "email": "email@emal.com",
+      "emailConfirmation": "email@emal.com",
+      "address": "Rua Humberto I",
+      "number": "33",
+      "optionalAddress": "ok",
+      "paymentOptions": "MON",
+      "orderItems": [
+        {
+          "quantity": 1,
+          "menuId": "cup-cake"
+        },
+        {
+          "quantity": 1,
+          "menuId": "donut"
+        }
+      ],
+      "id": 8
     }
   ]
 }
