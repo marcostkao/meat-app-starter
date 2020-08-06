@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
       email: this.fb.control('', [Validators.required, Validators.email]),
       password: this.fb.control('', [Validators.required]),
     })
-    this.navidateTo = this.activatedRoute.snapshot.params['to'] || '/'
+    this.navidateTo = this.activatedRoute.snapshot.params['to'] || btoa('/')
   }
 
   login() {
@@ -36,9 +36,9 @@ export class LoginComponent implements OnInit {
       .subscribe(user => this.notificationService.notify(`Bem vindo, ${user.name}`),
         response => //HttpErrorResponse
           this.notificationService.notify(response.error.message),
-          () => {
-            this.router.navigate([this.navidateTo])
-          }
+        () => {
+          this.router.navigate([atob(this.navidateTo)])
+        }
       )
   }
 
