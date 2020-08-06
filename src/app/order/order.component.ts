@@ -8,6 +8,9 @@ import { OrderService } from './order.service'
 import { CartItem } from '../restaurant-detail/shopping-cart/cart-item.model'
 import { Order, OrderItem } from './order.model';
 
+import 'rxjs/add/operator/do'
+
+
 @Component({
   selector: 'mt-order',
   templateUrl: './order.component.html'
@@ -22,15 +25,17 @@ export class OrderComponent implements OnInit {
 
   delivery: number = 8
 
+  orderId: string
+
   paymentOptions: RadioOption[] = [
-    {label: 'Dinheiro', value: 'MON'},
-    {label: 'Cartão de Débito', value: 'DEB'},
-    {label: 'Cartão Refeição', value: 'REF'}
+    { label: 'Dinheiro', value: 'MON' },
+    { label: 'Cartão de Débito', value: 'DEB' },
+    { label: 'Cartão Refeição', value: 'REF' }
   ]
 
-  constructor(private orderService: OrderService, 
-              private router: Router, 
-              private formBuilder: FormBuilder) { }
+  constructor(private orderService: OrderService,
+    private router: Router,
+    private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.orderForm = this.formBuilder.group({
@@ -42,18 +47,18 @@ export class OrderComponent implements OnInit {
       optionalAddress: this.formBuilder.control(''),
       paymentOptions: this.formBuilder.control('', [Validators.required])
 
-    }, {validator: OrderComponent.equalsTo})
+    }, { validator: OrderComponent.equalsTo })
   }
 
-  static equalsTo(group: AbstractControl): {[key:string]: boolean} {
+  static equalsTo(group: AbstractControl): { [key: string]: boolean } {
     const email = group.get('email')
     const emailConfirmation = group.get('emailConfirmation')
-    if(!email || !emailConfirmation) {
+    if (!email || !emailConfirmation) {
       return undefined
     }
 
-    if(email.value !== emailConfirmation.value) {
-      return {emailsNotMatch:true}
+    if (email.value !== emailConfirmation.value) {
+      return { emailsNotMatch: true }
     }
     return undefined
   }
@@ -78,15 +83,21 @@ export class OrderComponent implements OnInit {
     this.orderService.remove(item)
   }
 
+  isOrderCompleted(): boolean {
+    return this.orderId !== undefined
+  }
+
   checkOrder(order: Order) {
     order.orderItems = this.cartItems()
-      .map((item: CartItem)=> new OrderItem(item.quantity, item.menuItem.id))
-      this.orderService.checkOrder(order)
-       .subscribe( (orderId: string) => {
+      .map((item: CartItem) => new OrderItem(item.quantity, item.menuItem.id))
+    this.orderService.checkOrder(order)
+      .do((orderId: string) => {
+        this.orderId = orderId
+      })
+      .subscribe((orderId: string) => {
         this.router.navigate(['/order-summary'])
         this.orderService.clear()
       })
-      console.log(order);
   }
 
 
